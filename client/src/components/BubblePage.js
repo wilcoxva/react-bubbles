@@ -7,16 +7,21 @@ import ColorList from "./ColorList";
 const BubblePage = () => {
   const [colorList, setColorList] = useState([]);
 
-  axiosWithAuth()
+  useEffect(() => {
+    fetchColors();
+  }, [])
+  
+  const fetchColors = () => {
+    axiosWithAuth()
     .get('http://www.localhost:5000/api/colors')
     .then(res => {
       setColorList(res.data);
     })
-    .catch(err => {console.log(err)})
+    .catch(err => {console.log(err)})}
 
   return (
     <>
-      <ColorList colors={colorList} updateColors={setColorList} />
+      <ColorList colors={colorList} updateColors={setColorList} fetchColors={fetchColors} />
       <Bubbles colors={colorList} />
     </>
   );

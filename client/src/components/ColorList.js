@@ -18,11 +18,17 @@ const ColorList = ({ colors, updateColors, fetchColors }) => {
 
   const saveEdit = e => {
     e.preventDefault();
-    
-    axios
-    .put(`/api/colors/${colors.id}`, colorToEdit)
+    console.log(colorToEdit);
+    axiosWithAuth()
+    .put(`/colors/${colorToEdit.id}`, colorToEdit)
     .then(res => {
       console.log(res);
+      updateColors(colors.map(e => { if (e.id === res.data.id)
+      {
+        return res.data
+      } else {
+        return e
+      }}))
     })
     .catch(err => {
       console.log(err)
